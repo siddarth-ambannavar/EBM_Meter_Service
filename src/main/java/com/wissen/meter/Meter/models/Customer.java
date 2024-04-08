@@ -12,18 +12,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
     private Integer customerId;
     private String name;
-    private String phNo;
+    private String phoneNumber;
     private String password;
     private String address;
-
-    public Customer() {
-        // Default Constructor
-    }
-
-    public Customer(String name, String phNo, String password, String address) {
-        this.name = name;
-        this.phNo = phNo;
-        this.password = password;
-        this.address = address;
-    }
 }
