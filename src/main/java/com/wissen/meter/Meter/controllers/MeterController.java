@@ -20,18 +20,18 @@ public class MeterController {
 
     @Autowired
     private MeterService meterService;
-    @Autowired
-    private CustomerService customerService;
+//    @Autowired
+//    private CustomerService customerService;
 
     @PostMapping("/new-meter")
     public ResponseEntity<Meter> addMeterRecord(@RequestBody Meter meter) {
-        Customer customer = customerService.getCustomer(meter.getCustomerId());
-        if(customer == null)
-            return null;
-        if(meterService.isMeterNumberExists(meter.getMeterNumber()))
-            return null;
-        Meter newMeter = new Meter(meter.getMeterNumber(), customer);
-        meterService.addMeter(newMeter);
-        return new ResponseEntity<>(newMeter, HttpStatus.OK);
+//        Customer customer = customerService.getCustomer(meter.getCustomerId());
+//        if(customer == null)
+//            return null;
+//        if(meterService.isMeterNumberExists(meter.getMeterNumber()))
+//            return null;
+//        Meter newMeter = new Meter(meter.getMeterNumber(), customer);
+//        meterService.addMeter(newMeter);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

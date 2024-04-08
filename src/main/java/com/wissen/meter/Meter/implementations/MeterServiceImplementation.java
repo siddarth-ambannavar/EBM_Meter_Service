@@ -21,4 +21,7 @@ public class MeterServiceImplementation implements MeterService {
     public boolean isMeterNumberExists(long meterNumber) {
         return meterRepository.existsById(meterNumber);
     }
+
+    public static class UsageServiceImpl {
+    }
 }
