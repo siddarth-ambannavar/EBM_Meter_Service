@@ -11,9 +11,8 @@ import lombok.*;
 @Table(name = "METER")
 public class Meter {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "METER_ID")
-    private Long meterID;
+    private Long meterId;
     @ManyToOne
     @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;

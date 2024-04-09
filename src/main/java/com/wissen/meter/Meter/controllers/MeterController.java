@@ -29,9 +29,9 @@ public class MeterController {
     @PostMapping("/new-meter/{meterNo}")
     public ResponseEntity<Meter> addMeterRecord(@RequestHeader("Authorization") String token, @PathVariable Long meterNo) {
         Customer customer = customerService.getCustomer(token);
-        if(customer == null)
+        if (customer == null)
             return null;
-        if(meterService.isMeterNumberExists(meterNo))
+        if (meterService.isMeterNumberExists(meterNo))
             return null;
         Meter newMeter = new Meter(meterNo, customer);
         System.out.println("\n" + customer.getCustomerId() + "\n");
