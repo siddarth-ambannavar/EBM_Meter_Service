@@ -3,9 +3,12 @@ package com.wissen.meter.Meter.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
+@Table(name = "CUSTOMER")
 @SequenceGenerator(name = "customer_seq", sequenceName = "customer_seq", initialValue = 1, allocationSize = 1)
 public class Customer {
     @Id
@@ -15,20 +18,9 @@ public class Customer {
     @Column(name = "NAME")
     private String name;
     @Column(name = "PHONE_NUMBER")
-    private String phNo;
+    private String phoneNumber;
     @Column(name = "PASSWORD")
     private String password;
     @Column(name = "ADDRESS")
     private String address;
-
-    public Customer() {
-        // Default Constructor
-    }
-
-    public Customer(String name, String phNo, String password, String address) {
-        this.name = name;
-        this.phNo = phNo;
-        this.password = password;
-        this.address = address;
-    }
 }

@@ -8,12 +8,12 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "METER")
 public class Meter {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "METER_ID")
     private Long meterId;
     @ManyToOne
-    @JoinColumn(name = "CUSTOMER_ID")
+    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
     private Customer customer;
 }
