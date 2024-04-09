@@ -10,10 +10,15 @@ import lombok.*;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
+    @Column(name = "CUSTOMER_ID")
     private Integer customerId;
+    @Column(name = "NAME")
     private String name;
+    @Column(name = "PHONE_NUMBER")
     private String phNo;
+    @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "ADDRESS")
     private String address;
 
     public Customer() {

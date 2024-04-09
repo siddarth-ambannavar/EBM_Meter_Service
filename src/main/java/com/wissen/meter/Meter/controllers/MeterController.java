@@ -32,6 +32,6 @@ public class MeterController {
 //            return null;
 //        Meter newMeter = new Meter(meter.getMeterNumber(), customer);
 //        meterService.addMeter(newMeter);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(meter, HttpStatus.OK);
     }
 }

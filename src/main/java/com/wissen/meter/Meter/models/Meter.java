@@ -11,8 +11,9 @@ import lombok.*;
 public class Meter {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "METER_ID")
     private Long meterId;
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;
 }

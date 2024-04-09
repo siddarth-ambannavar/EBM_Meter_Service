@@ -15,8 +15,8 @@ public class UsageServiceImplementation implements UsageService {
         return usageRepository.findAll();
     }
 
-    @Override
-    public Usage retrieveUsageByMeterId(String meterId) {
-        return usageRepository.findByMeterId(meterId).orElse(null);
-    }
+//    @Override
+//    public Usage retrieveUsageByMeterId(String meterId) {
+//        return usageRepository.findByMeterId(meterId).orElse(null);
+//    }
 }

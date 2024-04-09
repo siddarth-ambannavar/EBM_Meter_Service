@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface UsageService {
     List<Usage> retrieveAllUsageDetails();
-    Usage retrieveUsageByMeterId(String meterId);
+//    Usage retrieveUsageByMeterId(String meterId);
 
 }
