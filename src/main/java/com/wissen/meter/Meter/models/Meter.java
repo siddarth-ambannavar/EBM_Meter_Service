@@ -11,9 +11,9 @@ import lombok.*;
 @Table(name = "METER")
 public class Meter {
     @Id
-    @Column(name = "METER_ID")
+    @Column(name = "METER_ID", nullable = false)
     private Long meterId;
     @ManyToOne
-    @JoinColumn(name = "CUSTOMER_ID")
+    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
     private Customer customer;
 }

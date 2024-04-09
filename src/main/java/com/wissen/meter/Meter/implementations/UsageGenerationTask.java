@@ -1,6 +1,5 @@
 package com.wissen.meter.Meter.implementations;
 
-import com.netflix.discovery.converters.Auto;
 import com.wissen.meter.Meter.models.Meter;
 import com.wissen.meter.Meter.models.Usage;
 import com.wissen.meter.Meter.repositories.MeterRepository;
@@ -23,7 +22,7 @@ public class UsageGenerationTask {
     private UsageRepository usageRepository;
     private static final Logger logger = LogManager.getLogger(UsageServiceImplementation.class);
 
-    @Scheduled(cron = "* */2 * * * *")
+    @Scheduled(fixedDelayString = "PT2M")
     public void addUsageDaily() {
         logger.info("Job executed at "+new Date());
         List<Meter> meters = meterRepository.findAll();
@@ -32,6 +31,7 @@ public class UsageGenerationTask {
             Usage usage = Usage.builder()
                     .unitsUsed(units)
                     .generatedDate(LocalDate.now())
+                    .meter(meter)
                     .build();
             usageRepository.save(usage);
         }
