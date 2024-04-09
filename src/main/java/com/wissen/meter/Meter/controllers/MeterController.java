@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/meters")
@@ -20,18 +17,25 @@ public class MeterController {
 
     @Autowired
     private MeterService meterService;
-//    @Autowired
-//    private CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
-    @PostMapping("/new-meter")
-    public ResponseEntity<Meter> addMeterRecord(@RequestBody Meter meter) {
-//        Customer customer = customerService.getCustomer(meter.getCustomerId());
-//        if(customer == null)
-//            return null;
-//        if(meterService.isMeterNumberExists(meter.getMeterNumber()))
-//            return null;
-//        Meter newMeter = new Meter(meter.getMeterNumber(), customer);
-//        meterService.addMeter(newMeter);
-        return new ResponseEntity<>(meter, HttpStatus.OK);
+    @GetMapping("/m/{token}")
+    public Customer custom(@PathVariable String token) {
+        String authorizationToken = "Bearer " + token;
+        return customerService.getCustomer(authorizationToken);
+    }
+
+    @PostMapping("/new-meter/{meterNo}")
+    public ResponseEntity<Meter> addMeterRecord(@RequestHeader("Authorization") String token, @PathVariable Long meterNo) {
+        Customer customer = customerService.getCustomer(token);
+        if (customer == null)
+            return null;
+        if (meterService.isMeterNumberExists(meterNo))
+            return null;
+        Meter newMeter = new Meter(meterNo, customer);
+        System.out.println("\n" + customer.getCustomerId() + "\n");
+        meterService.addMeter(newMeter);
+        return new ResponseEntity<>(newMeter, HttpStatus.OK);
     }
 }
