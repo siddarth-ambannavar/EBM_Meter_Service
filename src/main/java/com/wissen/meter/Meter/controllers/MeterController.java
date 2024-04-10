@@ -5,6 +5,7 @@ import com.wissen.meter.Meter.models.Customer;
 import com.wissen.meter.Meter.models.Meter;
 import com.wissen.meter.Meter.services.MeterService;
 import lombok.RequiredArgsConstructor;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,15 @@ public class MeterController {
     public Customer custom(@PathVariable String token) {
         String authorizationToken = "Bearer " + token;
         return customerService.getCustomer(authorizationToken);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Long>> getAllMeters(){
+        List<Long> meters = meterService.getAllMeterIds();
+        if(meters.size() == 0){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(meters, HttpStatus.OK);
     }
 
     @PostMapping("/new-meter/{meterNo}")
