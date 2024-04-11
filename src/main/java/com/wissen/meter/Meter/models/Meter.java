@@ -13,7 +13,7 @@ public class Meter {
     @Id
     @Column(name = "METER_ID")
     private Long meterId;
-    @ManyToOne
-    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
-    private Customer customer;
+
+    @Column(name = "CUSTOMER_ID")
+    private Integer customerId;
 }

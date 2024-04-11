@@ -16,7 +16,7 @@ public class UsageController {
     @Autowired
     private UsageService usageService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Usage>> getAllUsage(){
         return new ResponseEntity<>(usageService.retrieveAllUsageDetails(), HttpStatus.OK);
     }
@@ -25,12 +25,13 @@ public class UsageController {
         return new ResponseEntity<>(usageService.retrieveUsageByMeterId(meterId), HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<Double> getTotalUsageByMonth(@RequestParam("meter_id") long meterId, @RequestParam("date") LocalDate date){
+    @GetMapping("/get-monthly")
+    public ResponseEntity<Double> getTotalUsageByMonth(@RequestParam("meter_id") long meterId, @RequestParam("date") String date){
         if(usageService.retrieveUsageByMeterId(meterId).size() == 0){
             return new ResponseEntity<Double>(0.0, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Double>(usageService.getUnitsUsedInMonth(meterId, date), HttpStatus.OK);
+        LocalDate localDate = LocalDate.parse(date);
+        return new ResponseEntity<Double>(usageService.getUnitsUsedInMonth(meterId, localDate), HttpStatus.OK);
     }
 
 

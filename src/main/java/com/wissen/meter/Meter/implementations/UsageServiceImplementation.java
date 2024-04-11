@@ -4,10 +4,12 @@ import com.wissen.meter.Meter.models.Usage;
 import com.wissen.meter.Meter.repositories.UsageRepository;
 import com.wissen.meter.Meter.services.UsageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class UsageServiceImplementation implements UsageService {
 
     @Autowired
@@ -26,7 +28,7 @@ public class UsageServiceImplementation implements UsageService {
     public Double getUnitsUsedInMonth(long meterId, LocalDate date) {
         int month = date.getMonthValue();
         int year = date.getYear();
-        return usageRepository.getTotalUnitsUsedByMeterIdAndMonthYear(meterId, month, year);
+        return usageRepository.getTotalUnitsUsedByMeterIdAndMonthYear(meterId, month, year).orElse(0.0);
     }
 
 
