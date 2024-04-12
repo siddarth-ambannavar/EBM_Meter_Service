@@ -10,4 +10,6 @@ public interface MeterService {
     boolean isMeterNumberExists(long meterNumber);
 
     List<Long> getAllMeterIds();
+
+    List<Long> findUserMeters(Integer customerId);
 }

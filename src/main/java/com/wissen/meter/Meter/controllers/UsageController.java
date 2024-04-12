@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usage")
+@CrossOrigin({"http://localhost:4200"})
 public class UsageController {
     @Autowired
     private UsageService usageService;

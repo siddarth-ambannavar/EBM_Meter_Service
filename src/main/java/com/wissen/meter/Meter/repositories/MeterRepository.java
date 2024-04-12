@@ -9,4 +9,6 @@ import java.util.List;
 public interface MeterRepository extends JpaRepository<Meter, Long> {
     @Query("SELECT m.meterId from Meter m")
     List<Long> findAllMeterIds();
+
+    List<Meter> findByCustomerId(Integer customerId);
 }

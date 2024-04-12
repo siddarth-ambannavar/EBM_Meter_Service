@@ -6,6 +6,7 @@ import com.wissen.meter.Meter.services.MeterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,15 @@ public class MeterServiceImplementation implements MeterService {
     @Override
     public List<Long> getAllMeterIds() {
        return meterRepository.findAllMeterIds();
+    }
+
+    @Override
+    public List<Long> findUserMeters(Integer customerId) {
+        List<Meter> meters = meterRepository.findByCustomerId(customerId);
+        List<Long> meterNumbers = new ArrayList<>();
+        for(Meter meter : meters)
+            meterNumbers.add(meter.getMeterId());
+        return meterNumbers;
     }
 
 }
