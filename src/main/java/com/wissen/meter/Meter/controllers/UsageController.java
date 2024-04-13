@@ -3,6 +3,7 @@ package com.wissen.meter.Meter.controllers;
 import java.time.LocalDate;
 import java.util.*;
 
+import com.wissen.meter.Meter.ResponseBodies.UsageResponseBody;
 import com.wissen.meter.Meter.models.Usage;
 import com.wissen.meter.Meter.services.UsageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ public class UsageController {
         return new ResponseEntity<Double>(usageService.getUnitsUsedInMonth(meterId, localDate), HttpStatus.OK);
     }
 
-
-
+    @GetMapping("/get-usage-monthly")
+    public ResponseEntity<List<Usage>> getUsageByMonthYear(@RequestParam("meter_id") long meterId, @RequestParam("month") int month, @RequestParam("year") int year){
+        return new ResponseEntity<List<Usage>>(usageService.getUsageByMonthYear(meterId, month, year), HttpStatus.OK);
+    }
 }
