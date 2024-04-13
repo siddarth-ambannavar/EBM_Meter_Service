@@ -11,5 +11,6 @@ public interface UsageService {
     List<Usage> retrieveUsageByMeterId(long meterId);
 
     Double getUnitsUsedInMonth(long meterId, LocalDate date);
+    List<Usage> getUsageByMonthYear(long meterId, int month, int year);
 
 }

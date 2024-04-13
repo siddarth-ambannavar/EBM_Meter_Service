@@ -31,6 +31,11 @@ public class UsageServiceImplementation implements UsageService {
         return usageRepository.getTotalUnitsUsedByMeterIdAndMonthYear(meterId, month, year).orElse(0.0);
     }
 
+    @Override
+    public List<Usage> getUsageByMonthYear(long meterId, int month, int year) {
+        return usageRepository.getUsageByMeterIdAndMonthYear(meterId, month, year);
+    }
+
 
 //    @Override
 //    public Usage retrieveUsageByMeterId(String meterId) {
