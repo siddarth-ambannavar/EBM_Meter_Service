@@ -24,12 +24,9 @@ public class MeterController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping
+    @GetMapping("/get-all-meters")
     public ResponseEntity<List<Long>> getAllMeters(){
         List<Long> meters = meterService.getAllMeterIds();
-        if(meters.size() == 0){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(meters, HttpStatus.OK);
     }
 
