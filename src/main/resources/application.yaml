@@ -1,4 +1,8 @@
 spring:
+  task:
+    scheduling:
+      pool:
+        size: 4
   application:
     name: MeterService
   datasource:
@@ -21,3 +25,10 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+logging:
+  level:
+    com:
+      wissen:
+        meter:
+          Meter: DEBUG
