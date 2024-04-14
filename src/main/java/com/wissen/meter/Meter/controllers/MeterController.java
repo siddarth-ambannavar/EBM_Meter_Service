@@ -8,13 +8,17 @@ import com.wissen.meter.Meter.models.Meter;
 import com.wissen.meter.Meter.services.MeterService;
 import lombok.RequiredArgsConstructor;
 import java.util.*;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/meters")
+@Slf4j
 @CrossOrigin({"http://localhost:4200"})
 @RequiredArgsConstructor
 public class MeterController {
@@ -27,9 +31,11 @@ public class MeterController {
     @GetMapping("/get-all-meters")
     public ResponseEntity<List<Long>> getAllMeters(){
         List<Long> meters = meterService.getAllMeterIds();
+        log.info("List of All Meters");
         return new ResponseEntity<>(meters, HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping("/new-meter/{meterNo}")
     public ResponseEntity<Meter> addMeterRecord(@RequestHeader("Authorization") String token, @PathVariable Long meterNo) {
         Integer customerId = customerService.getCustomerId(token);
@@ -39,6 +45,7 @@ public class MeterController {
             throw new MeterRecordAlreadyExistsException("Meter Number: " + meterNo + " Already Registered");
         Meter newMeter = new Meter(meterNo, customerId);
         meterService.addMeter(newMeter);
+        log.info("New Meter added, CustomerId: {}, MeterId: {}", newMeter.getCustomerId(), newMeter.getMeterId());
         return new ResponseEntity<>(newMeter, HttpStatus.OK);
     }
 
@@ -53,7 +60,7 @@ public class MeterController {
                 .status(HttpStatus.OK)
                 .meters(meters)
                 .build();
+        log.info("All meter of Customer with id: {}", customerId);
         return new ResponseEntity<>(response, HttpStatus.OK);
-//        return meterService.findUserMeters(customerId);
     }
 }
