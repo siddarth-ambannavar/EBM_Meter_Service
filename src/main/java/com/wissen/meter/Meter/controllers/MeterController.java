@@ -39,11 +39,14 @@ public class MeterController {
     @PostMapping("/new-meter/{meterNo}")
     public ResponseEntity<Meter> addMeterRecord(@RequestHeader("Authorization") String token, @PathVariable Long meterNo) {
         Integer customerId = customerService.getCustomerId(token);
+        log.info("{}", customerId);
+        System.out.println(customerId);
         if (customerId == null)
             throw new CustomerNotFoundException("Customer Not Found");
         if (meterService.isMeterNumberExists(meterNo))
             throw new MeterRecordAlreadyExistsException("Meter Number: " + meterNo + " Already Registered");
         Meter newMeter = new Meter(meterNo, customerId);
+        log.info("---- {} ----", meterNo);
         meterService.addMeter(newMeter);
         log.info("New Meter added, CustomerId: {}, MeterId: {}", newMeter.getCustomerId(), newMeter.getMeterId());
         return new ResponseEntity<>(newMeter, HttpStatus.OK);
@@ -62,5 +65,10 @@ public class MeterController {
                 .build();
         log.info("All meter of Customer with id: {}", customerId);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/removecustmeters/{customerId}")
+    public String removeCustomerMeters(@PathVariable int customerId) {
+        return meterService.deleteMetersByCustomerId(customerId);
     }
 }
