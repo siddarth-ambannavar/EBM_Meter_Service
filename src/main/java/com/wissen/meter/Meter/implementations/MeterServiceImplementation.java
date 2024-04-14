@@ -39,4 +39,12 @@ public class MeterServiceImplementation implements MeterService {
         return meterNumbers;
     }
 
+    @Override
+    public String deleteMetersByCustomerId(Integer customerId) {
+        List<Meter> customerMeters = meterRepository.findByCustomerId(customerId);
+        for(Meter m : customerMeters)
+            meterRepository.delete(m);
+        return "All meters of Customer Removed";
+    }
+
 }

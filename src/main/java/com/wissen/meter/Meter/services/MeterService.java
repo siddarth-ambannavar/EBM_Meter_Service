@@ -12,4 +12,6 @@ public interface MeterService {
     List<Long> getAllMeterIds();
 
     List<Long> findUserMeters(Integer customerId);
+
+    String deleteMetersByCustomerId(Integer customerId);
 }
