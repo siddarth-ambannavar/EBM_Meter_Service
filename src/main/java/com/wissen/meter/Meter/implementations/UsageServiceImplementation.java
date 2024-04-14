@@ -36,6 +36,13 @@ public class UsageServiceImplementation implements UsageService {
         return usageRepository.getUsageByMeterIdAndMonthYear(meterId, month, year);
     }
 
+    @Override
+    public void deleteUsagesByMeterId(long meterId) {
+        List<Usage> usages = usageRepository.getByMeterId(meterId);
+        for(Usage u : usages)
+            usageRepository.deleteById(u.getUsageId());
+    }
+
 
 //    @Override
 //    public Usage retrieveUsageByMeterId(String meterId) {

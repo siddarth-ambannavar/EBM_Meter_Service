@@ -6,6 +6,7 @@ import com.wissen.meter.Meter.customExceptions.MeterRecordAlreadyExistsException
 import com.wissen.meter.Meter.externalServices.CustomerService;
 import com.wissen.meter.Meter.models.Meter;
 import com.wissen.meter.Meter.services.MeterService;
+import com.wissen.meter.Meter.services.UsageService;
 import lombok.RequiredArgsConstructor;
 import java.util.*;
 
@@ -25,6 +26,8 @@ public class MeterController {
 
     @Autowired
     private MeterService meterService;
+    @Autowired
+    private UsageService usageService;
     @Autowired
     private CustomerService customerService;
 
@@ -67,8 +70,12 @@ public class MeterController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Transactional
     @DeleteMapping("/removecustmeters/{customerId}")
     public String removeCustomerMeters(@PathVariable int customerId) {
+        List<Long> customerMeters = meterService.findUserMeters(customerId);
+        for(Long meter : customerMeters)
+            usageService.deleteUsagesByMeterId(meter);
         return meterService.deleteMetersByCustomerId(customerId);
     }
 }
