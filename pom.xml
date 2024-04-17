@@ -11,7 +11,7 @@
 
 	<groupId>com.wissen.meter</groupId>
 	<artifactId>Meter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Meter</name>
 	<description>Demo project for Spring Boot</description>
 
