@@ -42,8 +42,6 @@ public class MeterController {
     @PostMapping("/new-meter/{meterNo}")
     public ResponseEntity<Meter> addMeterRecord(@RequestHeader("Authorization") String token, @PathVariable Long meterNo) {
         Integer customerId = customerService.getCustomerId(token);
-        log.info("{}", customerId);
-        System.out.println(customerId);
         if (customerId == null)
             throw new CustomerNotFoundException("Customer Not Found");
         if (meterService.isMeterNumberExists(meterNo))
