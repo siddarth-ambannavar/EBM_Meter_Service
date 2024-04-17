@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MeterServiceImplementation implements MeterService {
@@ -45,6 +46,11 @@ public class MeterServiceImplementation implements MeterService {
         for(Meter m : customerMeters)
             meterRepository.delete(m);
         return "All meters of Customer Removed";
+    }
+
+    @Override
+    public Optional<Meter> getMeterByMeterId(Long meterId) {
+        return meterRepository.findById(meterId);
     }
 
 }

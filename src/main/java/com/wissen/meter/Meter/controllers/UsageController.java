@@ -4,7 +4,12 @@ import java.time.LocalDate;
 import java.util.*;
 
 import com.wissen.meter.Meter.ResponseBodies.UsageResponseBody;
+import com.wissen.meter.Meter.customExceptions.CustomerNotFoundException;
+import com.wissen.meter.Meter.customExceptions.MeterRecordNotFoundException;
+import com.wissen.meter.Meter.externalServices.CustomerService;
+import com.wissen.meter.Meter.models.Meter;
 import com.wissen.meter.Meter.models.Usage;
+import com.wissen.meter.Meter.services.MeterService;
 import com.wissen.meter.Meter.services.UsageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,15 +24,26 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin({"http://localhost:4200"})
 @RequiredArgsConstructor
 public class UsageController {
+
     @Autowired
     private UsageService usageService;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private MeterService meterService;
 
     @GetMapping
     public ResponseEntity<List<Usage>> getAllUsage(){
         return new ResponseEntity<>(usageService.retrieveAllUsageDetails(), HttpStatus.OK);
     }
     @GetMapping("/meter/{meterId}")
-    public ResponseEntity<List<Usage>> getUsageByMeterId(@PathVariable long meterId){
+    public ResponseEntity<List<Usage>> getUsageByMeterId(@RequestHeader("Authorization") String token, @PathVariable long meterId){
+        Integer customerId = customerService.getCustomerId(token);
+        Meter meter = meterService.getMeterByMeterId(meterId).orElse(null);
+        if(meter == null)
+            throw new MeterRecordNotFoundException("Meter with id: " + meterId + " not found");
+        if(!Objects.equals(meter.getCustomerId(), customerId))
+            throw new CustomerNotFoundException("Invalid Meter Access");
         log.info("All usages of Meter id: {}", meterId);
         return new ResponseEntity<>(usageService.retrieveUsageByMeterId(meterId), HttpStatus.OK);
     }
